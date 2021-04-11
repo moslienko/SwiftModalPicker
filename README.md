@@ -6,15 +6,6 @@
    <a href="https://developer.apple.com/swift/">
       <img src="https://img.shields.io/badge/Swift-5.2-orange.svg?style=flat" alt="Swift 5.2">
    </a>
-   <a href="http://cocoapods.org/pods/SwiftModalPicker">
-      <img src="https://img.shields.io/cocoapods/v/SwiftModalPicker.svg?style=flat" alt="Version">
-   </a>
-   <a href="http://cocoapods.org/pods/SwiftModalPicker">
-      <img src="https://img.shields.io/cocoapods/p/SwiftModalPicker.svg?style=flat" alt="Platform">
-   </a>
-   <a href="https://github.com/Carthage/Carthage">
-      <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage Compatible">
-   </a>
    <a href="https://github.com/apple/swift-package-manager">
       <img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="SPM">
    </a>
@@ -23,42 +14,30 @@
 # SwiftModalPicker
 
 <p align="center">
-ℹ️ Short description of SwiftModalPicker
+ℹ️ Swift library for displaying a modal sheet with a picker in iOS apps.
+</p>
+
+<p float="center">
+<img src="https://i.imgur.com/d7xsTyA.png" width="30%">
+<img src="https://i.imgur.com/bLMl7Wi.png" width="30%">
+<img src="https://i.imgur.com/s2hNI9d.png" width="30%">
+<img src="https://i.imgur.com/9VyZkG2.png" width="30%">
+<img src="https://i.imgur.com/YhJTsPM.png" width="30%">
 </p>
 
 ## Features
 
-- [x] ℹ️ Add SwiftModalPicker features
+- [x] 📅 Picker date
+- [x] 🕑 Picker time
+- [x] ↕️ Picker custom value
+- [x] ↔️ Multi picker
+- [x] ⚙️ Fine-tuning the picker and setting a custom style
 
 ## Example
 
 The example application is the best way to see `SwiftModalPicker` in action. Simply open the `SwiftModalPicker.xcodeproj` and run the `Example` scheme.
 
 ## Installation
-
-### CocoaPods
-
-SwiftModalPicker is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```bash
-pod 'SwiftModalPicker'
-```
-
-### Carthage
-
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-
-To integrate SwiftModalPicker into your Xcode project using Carthage, specify it in your `Cartfile`:
-
-```ogdl
-github "moslienko/SwiftModalPicker"
-```
-
-Run `carthage update` to build the framework and drag the built `SwiftModalPicker.framework` into your Xcode project. 
-
-On your application targets’ “Build Phases” settings tab, click the “+” icon and choose “New Run Script Phase” and add the Framework path as mentioned in [Carthage Getting started Step 4, 5 and 6](https://github.com/Carthage/Carthage/blob/master/README.md#if-youre-building-for-ios-tvos-or-watchos)
-
 ### Swift Package Manager
 
 To integrate using Apple's [Swift Package Manager](https://swift.org/package-manager/), add the following as a dependency to your `Package.swift`:
@@ -76,17 +55,149 @@ Alternatively navigate to your Xcode project, select `Swift Packages` and click 
 If you prefer not to use any of the aforementioned dependency managers, you can integrate SwiftModalPicker into your project manually. Simply drag the `Sources` Folder into your Xcode project.
 
 ## Usage
+### Create picker and show
 
-ℹ️ Describe the usage of your Kit
+```swift
+	let picker = SwiftModalPicker(type: <SwiftModalPicker.PickerType>, toolbarItems: <[SwiftModalPicker.ToolbarButton]>)
+	pickerViewPresenter.showPicker(from: self.view)
+```
 
-## Contributing
-Contributions are very welcome 🙌
+### Handlers
+
+```swift
+  public var onDatePickerDone: ((_ date: Date) -> Void)?
+    public var onPickerDone: ((_ value: String, _ index: Int) -> Void)?
+    public var onPickerMiltiComponentsDone: ((_ values: [String], _ indexes: [Int]) -> Void)?
+    public var onPickerClosed: (() -> Void)?
+```
+
+### Toolbar
+
+```swift
+	public enum ToolbarButton {
+        case cancel(title: String)
+        case done
+        case custom(button: UIBarButtonItem)
+        case space
+	}
+```
+
+Usage example
+
+```swift
+	 let button = UIBarButtonItem(title: "Remove date", style: .plain, target: self, action: #selector(self.removeDate))
+        let pickerToolbarButtons: [SwiftModalPicker.ToolbarButton] = [
+            .cancel(title: "Cancel"),
+            .custom(button: button),
+            .space,
+            .done
+        ]
+```
+
+### Picker title
+
+You can specify your own value for the picker title using the UIBarButtonItem custom button for the toolbar
+
+```swift
+	 let label = UILabel(frame: .zero)
+        label.text = "Title for picker"
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
+        let pickerTitle = UIBarButtonItem(customView: label)
+        
+        let pickerToolbarButtons: [SwiftModalPicker.ToolbarButton] = [
+            .cancel(title: "Cancel"),
+            .space,
+            .custom(button: pickerTitle),
+            .space,
+            .done
+        ]
+```
+
+### Date picker
+
+```swift
+	  let pickerViewPresenter = SwiftModalPicker(type: .calendar(params: SwiftModalPicker.CalendarParams(selectedDate: Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date, timeZone: .current)), toolbarItems: pickerToolbarButtons)
+        
+        pickerViewPresenter.onDatePickerDone = { date in
+            ...
+        }
+```
+
+### Time picker
+
+```swift
+	 let pickerViewPresenter = SwiftModalPicker(type: .calendar(params: SwiftModalPicker.CalendarParams(selectedDate: Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .time, timeZone: .current)), toolbarItems: pickerToolbarButtons)
+        pickerViewPresenter.onDatePickerDone = { date in
+            ...
+        }
+```
+
+### CustomPicker
+
+```swift
+	let items = ["Apple", "Avocado", "Banana", "Blackberries"]
+        let pickerViewPresenter = SwiftModalPicker(type: .custom(items: items, selectedIndex: 2), toolbarItems: pickerToolbarButtons)
+        pickerViewPresenter.onPickerDone = { (val, index) in
+            ...
+        }
+```
+
+### MultiComponentPicker
+
+```swift
+	 let items = [["iPhone", "iPad", "MacBook", "Mac mini"], ["AirPods", "AirPods Pro", "AirPods Max"]]
+        let pickerViewPresenter = SwiftModalPicker(type: .customWithMultiRows(items: items, selectedIndexes: [2, 1]), toolbarItems: pickerToolbarButtons)
+        
+        pickerViewPresenter.onPickerMiltiComponentsDone = { (values, indexes) in
+            ...
+        }
+```
+
+## Customization
+
+The following options are available to change the picker style
+
+```swift
+public var viewTintColor: UIColor?
+public var pickerBackgroundColor: UIColor?
+public var pickerColor: UIColor?
+public var toolbarBackgroundColor: UIColor?
+```
+
+Example
+
+```swift
+	  let pickerViewPresenter = SwiftModalPicker(type: .calendar(params: SwiftModalPicker.CalendarParams(selectedDate: Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date, timeZone: .current)), toolbarItems: pickerToolbarButtons)
+        pickerViewPresenter.viewTintColor = .red
+        pickerViewPresenter.pickerBackgroundColor = .black
+        pickerViewPresenter.pickerColor = .white
+        pickerViewPresenter.toolbarBackgroundColor = UIColor.black.withAlphaComponent(0.7)
+```
+
+## Get the current picker
+```swift
+let picker = view.getActiveSwiftModalPicker()
+```
+
+Further actions with him - you can close the picker
+```swift
+picker?.close()
+```
+
+You can get the current value
+```swift
+picker?.donePicker()
+```
+
+As a result of which `onPickerDone` event will be triggered
 
 ## License
 
 ```
 SwiftModalPicker
-Copyright (c) 2021 moslienko 8676976+moslienko@users.noreply.github.com
+Copyright (c) 2021 Pavel Moslienko 8676976+moslienko@users.noreply.github.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
