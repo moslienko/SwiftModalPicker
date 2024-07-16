@@ -65,7 +65,7 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 ### Handlers
 
 ```swift
-  public var onDatePickerDone: ((_ date: Date) -> Void)?
+    public var onDatePickerDone: ((_ date: Date) -> Void)?
     public var onPickerDone: ((_ value: String, _ index: Int) -> Void)?
     public var onPickerMiltiComponentsDone: ((_ values: [String], _ indexes: [Int]) -> Void)?
     public var onPickerClosed: (() -> Void)?
@@ -75,17 +75,17 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ```swift
 	public enum ToolbarButton {
-        case cancel(title: String)
-        case done
-        case custom(button: UIBarButtonItem)
-        case space
+        	case cancel(title: String)
+        	case done
+        	case custom(button: UIBarButtonItem)
+        	case space
 	}
 ```
 
 Usage example
 
 ```swift
-	 let button = UIBarButtonItem(title: "Remove date", style: .plain, target: self, action: #selector(self.removeDate))
+	let button = UIBarButtonItem(title: "Remove date", style: .plain, target: self, action: #selector(self.removeDate))
         let pickerToolbarButtons: [SwiftModalPicker.ToolbarButton] = [
             .cancel(title: "Cancel"),
             .custom(button: button),
@@ -99,7 +99,7 @@ Usage example
 You can specify your own value for the picker title using the UIBarButtonItem custom button for the toolbar
 
 ```swift
-	 let label = UILabel(frame: .zero)
+	let label = UILabel(frame: .zero)
         label.text = "Title for picker"
         label.textAlignment = .center
         label.textColor = .black
@@ -147,7 +147,7 @@ You can specify your own value for the picker title using the UIBarButtonItem cu
 ### MultiComponentPicker
 
 ```swift
-	 let items = [["iPhone", "iPad", "MacBook", "Mac mini"], ["AirPods", "AirPods Pro", "AirPods Max"]]
+	let items = [["iPhone", "iPad", "MacBook", "Mac mini"], ["AirPods", "AirPods Pro", "AirPods Max"]]
         let pickerViewPresenter = SwiftModalPicker(type: .customWithMultiRows(items: items, selectedIndexes: [2, 1]), toolbarItems: pickerToolbarButtons)
         
         pickerViewPresenter.onPickerMiltiComponentsDone = { (values, indexes) in
@@ -169,7 +169,7 @@ public var toolbarBackgroundColor: UIColor?
 Example
 
 ```swift
-	  let pickerViewPresenter = SwiftModalPicker(type: .calendar(params: SwiftModalPicker.CalendarParams(selectedDate: Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date, timeZone: .current)), toolbarItems: pickerToolbarButtons)
+	let pickerViewPresenter = SwiftModalPicker(type: .calendar(params: SwiftModalPicker.CalendarParams(selectedDate: Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date, timeZone: .current)), toolbarItems: pickerToolbarButtons)
         pickerViewPresenter.viewTintColor = .red
         pickerViewPresenter.pickerBackgroundColor = .black
         pickerViewPresenter.pickerColor = .white
