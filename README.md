@@ -1,5 +1,5 @@
 <p align="center">
-   <img width="200" src="https://raw.githubusercontent.com/SvenTiigi/SwiftKit/gh-pages/readMeAssets/SwiftKitLogo.png" alt="SwiftModalPicker Logo">
+   <img width="200" src="https://moslienko.github.io/Assets/SwiftModalPicker/sdk.png" alt="SwiftModalPicker Logo">
 </p>
 
 <p align="center">
@@ -14,15 +14,15 @@
 # SwiftModalPicker
 
 <p align="center">
-ℹ️ Swift library for displaying a modal sheet with a picker in iOS apps.
+Swift library for displaying a modal sheet with a picker in iOS apps.
 </p>
 
-<p float="center">
-<img src="https://i.imgur.com/d7xsTyA.png" width="30%">
-<img src="https://i.imgur.com/bLMl7Wi.png" width="30%">
-<img src="https://i.imgur.com/s2hNI9d.png" width="30%">
-<img src="https://i.imgur.com/9VyZkG2.png" width="30%">
-<img src="https://i.imgur.com/YhJTsPM.png" width="30%">
+<p align="center">
+<img src="https://moslienko.github.io/Assets/SwiftModalPicker/screenshot_1.png" width="30%">
+<img src="https://moslienko.github.io/Assets/SwiftModalPicker/screenshot_2.png" width="30%">
+<img src="https://moslienko.github.io/Assets/SwiftModalPicker/screenshot_3.png" width="30%">
+<img src="https://moslienko.github.io/Assets/SwiftModalPicker/screenshot_4.png" width="30%">
+<img src="https://moslienko.github.io/Assets/SwiftModalPicker/screenshot_5.png" width="30%">
 </p>
 
 ## Features
